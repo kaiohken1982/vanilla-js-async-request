@@ -1,7 +1,14 @@
 class App 
 {
-    constructor() {
+    #regionList
 
+    constructor() {
+        this.registerCustomElements()
+    }
+
+    registerCustomElements() {
+        window.customElements.define('region-list', RegionList)
+        window.customElements.define('province-list', ProvinceList)
     }
 
     readRegioni() {
@@ -42,11 +49,13 @@ class App
         
         try {
             const regioni = await this.readRegioni()
-            console.log(regioni)
+            // console.log(regioni)
             const province = await this.readProvince()
-            console.log(province)
+            // console.log(province)
             const data = this.bindData(regioni, province)
-            console.log(data)
+            // console.log(data)
+            const regionList = document.getElementsByTagName('region-list')[0]
+            regionList.render(data)
         } catch (err) {
             console.log('Error: ' + err.message);
         }
